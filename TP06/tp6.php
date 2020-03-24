@@ -80,3 +80,8 @@ foot::displayEquipe();
 //fin
 ?>
 
+
+<hr/>
+
+
+
