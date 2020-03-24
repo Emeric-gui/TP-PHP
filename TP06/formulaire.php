@@ -5,18 +5,14 @@
 
 class formulaire{
 
-    private $zoneTexte = 0;
-
-
     public function __construct($meth, $url)
     {
         echo "<form action='".$url."' method='".$meth."'>";
     }
 
-
     public function ajouterzonetexte($name){
-        $this->zoneTexte++;
-        echo "<label>".$name." : </label><input type='text' name='zoneText".$this->zoneTexte."'><br>";
+        $name = str_replace(" ", "_", $name);
+        echo "<label>".$name." : </label><input type='text' name='".$name."'><br>";
     }
 
     public function ajouterbutton(){
