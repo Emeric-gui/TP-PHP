@@ -1,7 +1,7 @@
 <?php
 include("formulaire.php");
 
-final class form2 extends formulaire{
+class form2 extends formulaire{
 
     public function __construct($meth, $url)
     {

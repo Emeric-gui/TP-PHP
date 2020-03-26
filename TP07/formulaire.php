@@ -3,7 +3,7 @@
 <?php
 
 
-class formulaire{
+final class formulaire{
 
     public function __construct($meth, $url)
     {
