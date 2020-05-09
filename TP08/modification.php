@@ -30,35 +30,36 @@
     </nav>
     <h1>Ajout</h1>
     <hr />
+
     <form method="post">
         <div class="form-group">
             <label for="id_auteur">ID de l'auteur</label>
-            <input type="text" class="form-control" id="id_auteur" name="id_auteur">
+            <input type="text" class="form-control" id="id_auteur" name="id_auteur" required>
         </div>
 
         <div class="form-group">
             <label for="nom_auteur">Nom de l'auteur</label>
-            <input type="text" class="form-control" id="nom_auteur" name="nom_auteur">
+            <input type="text" class="form-control" id="nom_auteur" name="nom_auteur" required>
         </div>
 
         <div class="form-group">
             <label for="id_auteur">Prénom de l'auteur</label>
-            <input type="text" class="form-control" id="prenom_auteur" name="prenom_auteur">
+            <input type="text" class="form-control" id="prenom_auteur" name="prenom_auteur" required>
         </div>
 
         <div class="form-group">
             <label for="id_siecle">ID du siècle</label>
-            <input type="text" class="form-control" id="id_siecle" name="id_siecle">
+            <input type="text" class="form-control" id="id_siecle" name="id_siecle" required>
         </div>
 
         <div class="form-group">
             <label for="num_siecle">Siècle</label>
-            <input type="text" class="form-control" id="num_siecle" name="num_siecle">
+            <input type="text" class="form-control" id="num_siecle" name="num_siecle" required>
         </div>
 
         <div class="form-group">
             <label for="citation">Citation</label>
-            <input type="text" class="form-control" id="citation" name="citation">
+            <input type="text" class="form-control" id="citation" name="citation" required>
         </div>
 
         <button type="submit" class="btn btn-secondary">Ajouter</button>
@@ -100,25 +101,56 @@
         $ateruet = $_POST['id_auteur'];
         $phrase =$_POST['citation'];
 
+        $idAlready = false;
 
-        $reqAuteure = $bdd->prepare('INSERT INTO auteur(id, nom, prenom) VALUES(:id, :nom, :prenom)');
-        $reqAuteure->execute(array(
+        $reqId = $bdd->prepare('select id from citation where id=:id;');
+        $reqId->execute(array('id'=>$idCitations));
+        $reqFetchId = $reqId->fetch();
+
+        $reqAutId = $bdd->prepare('select id from auteur where id=:id;');
+        $reqAutId->execute(array('id'=>$_POST['id_auteur']));
+        $reqAutFetchId = $reqAutId->fetch();
+
+        $reqSiecleId = $bdd->prepare('select id from siecle where id=:id;');
+        $reqSiecleId->execute(array('id'=>$_POST['id_siecle']));
+        $reqSiecleFetchId = $reqSiecleId->fetch();
+
+        if ($reqFetchId['id'] > 0){
+            $idAlready = true;
+        }
+
+        if ($reqAutFetchId['id'] > 0){
+            $idAlready = true;
+        }
+
+        if ($reqSiecleFetchId['id'] > 0){
+            $idAlready = true;
+        }
+
+
+
+        if(!$idAlready){
+            $reqAuteure = $bdd->prepare('INSERT INTO auteur(id, nom, prenom) VALUES(:id, :nom, :prenom)');
+            $reqAuteure->execute(array(
                 'id'=>$_POST['id_auteur'],
-            'nom'=>$_POST['nom_auteur'],
-            'prenom'=>$_POST['prenom_auteur']));
+                'nom'=>$_POST['nom_auteur'],
+                'prenom'=>$_POST['prenom_auteur']));
 
 
-        $reqSiecles = $bdd->prepare('INSERT INTO siecle(id, numero) VALUES(:id, :num)');
-        $reqSiecles->execute(array(
-            'id'=>$_POST['id_siecle'],
-            'num'=>$_POST['num_siecle']));
+            $reqSiecles = $bdd->prepare('INSERT INTO siecle(id, numero) VALUES(:id, :num)');
+            $reqSiecles->execute(array(
+                'id'=>$_POST['id_siecle'],
+                'num'=>$_POST['num_siecle']));
 
-        $reqCitations = $bdd->prepare('INSERT INTO citation(id, phrase, auteurid, siecleid) VALUES(:id, :phrase, :idAuteur, :idSiecle)');
-        $reqCitations->execute(array(
-            'id'=>($_POST['id_siecle'] + $_POST['id_auteur']),
-            'phrase'=>$_POST['citation'],
-            'idAuteur'=>$_POST['id_auteur'],
-            'idSiecle'=>$_POST['id_siecle']));
+            $reqCitations = $bdd->prepare('INSERT INTO citation(id, phrase, auteurid, siecleid) VALUES(:id, :phrase, :idAuteur, :idSiecle)');
+            $reqCitations->execute(array(
+                'id'=>($_POST['id_siecle'] + $_POST['id_auteur']),
+                'phrase'=>$_POST['citation'],
+                'idAuteur'=>$_POST['id_auteur'],
+                'idSiecle'=>$_POST['id_siecle']));
+        }else{
+            echo "Deja dans la base de données";
+        }
 
 
     }
