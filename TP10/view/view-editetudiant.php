@@ -29,6 +29,7 @@
                     <input type="text" id="prenom" name="prenom"  required class="form-control">
                     <label for="note">Note</label>
                     <input type="text" id="note" name="note"  required class="form-control">
+                    <input type="hidden" name="id" value="<?php echo $_GET['id']?>">
                     <br>
                     <input type="submit" class="btn btn-primary" value="Confirmer">
                     <a class="btn btn-secondary" href="view-newetudiant.php" role="button">Ajout d'un etudiant</a>

@@ -56,9 +56,11 @@
                     <table class="table">
                         <thead>
                             <tr>
+                                <th scope="col">ID</th>
                                 <th scope="col">Nom</th>
                                 <th scope="col">Prenom</th>
                                 <th scope="col">Note</th>
+                                <th scope="col">Modification</th>
                                 <th scope="col">Suppression</th>
                             </tr>
                         </thead>
@@ -69,7 +71,7 @@
                             $request->execute(array('user_id'=>$_SESSION['user_id']));
                             if($request){
                                 while($donnees = $request->fetch()){
-                                    echo "<tr><td>".$donnees['nom']."</td><td>".$donnees['prenom']."</td><td>".$donnees['note']."</td><td><a class=\"btn btn-primary\" href=\"../controller/controller.php?func=Suppr&id=".$donnees['id']."\" role=\"button\">Suppression</a></td></tr>";
+                                    echo "<tr><td>".$donnees['id']."</td><td>".$donnees['nom']."</td><td>".$donnees['prenom']."</td><td>".$donnees['note']."</td>  <td><a class=\"btn btn-primary\" href=\"view-editetudiant.php?id=".$donnees['id']."\" role=\"button\">Modification</a></td><td><a class=\"btn btn-primary\" href=\"../controller/controller.php?func=Suppr&id=".$donnees['id']."\" role=\"button\">Suppression</a></td></tr>";
                                 }
                             }
                         ?>
@@ -77,7 +79,6 @@
                     </table>
                     <br>
                     <a class="btn btn-secondary" href="view-newetudiant.php" role="button">Ajout d'un etudiant</a>
-                    <a class="btn btn-secondary" href="view-editetudiant.php" role="button">Modification d'un etudiant</a>
                     <br>
                 </div>
             </div>

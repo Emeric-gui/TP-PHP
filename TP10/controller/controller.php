@@ -78,16 +78,14 @@
             header('Location: viewlogin.php');
         }else{
             $bdd = dbConnect();
-            $requestStudent = $bdd->prepare('select id, user_id from etudiant where nom=:nom and prenom=:prenom');
-            $requestStudent->execute(array('nom'=>$_POST['nom'],
-                'prenom'=>$_POST['prenom']));
-            $result = $requestStudent->fetch();
 
-            if($result['user_id'] == $_SESSION['user_id']){
-                $modification = $bdd->prepare('update etudiant set note=:note where id=:id');
+            if($_SESSION['user_id']){
+                $modification = $bdd->prepare('update etudiant set nom=:nom, prenom=:prenom, note=:note where id=:id');
                 $modification->execute(array(
+                    'nom'=>$_POST['nom'],
+                    'prenom'=>$_POST['prenom'],
                     'note'=>$_POST['note'],
-                    'id'=>$result['id']));
+                    'id'=>$_POST['id']));
 
                 header('Location: ../view/viewadmin.php');
             }else{
