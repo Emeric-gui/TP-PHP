@@ -84,9 +84,8 @@
             $result = $requestStudent->fetch();
 
             if($result['user_id'] == $_SESSION['user_id']){
-                $modification = $bdd->prepare('update etudiant set nom=:nom, prenom=:prenom, note=:note where id=:id');
-                $modification->execute(array('nom'=>$_POST['nom'],
-                    'prenom'=>$_POST['prenom'],
+                $modification = $bdd->prepare('update etudiant set note=:note where id=:id');
+                $modification->execute(array(
                     'note'=>$_POST['note'],
                     'id'=>$result['id']));
 
