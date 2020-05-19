@@ -25,12 +25,6 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a href="view-newetudiant.php" class="nav-link" >Ajout<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a href="view-editetudiant.php" class="nav-link" >Modification<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="../controller/controller.php?func=Deco">Deconnexion</a>
             </li>
         </ul>
